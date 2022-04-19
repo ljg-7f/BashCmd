@@ -1,0 +1,68 @@
+<idea-plugin>
+    <id>com.bash.cmd</id>
+    <name>Bash Cmd</name>
+    <version>1.0.0</version>
+    <vendor email="liu_jing_guang@163.com">7f</vendor>
+    <description>
+        <![CDATA[<html>
+        <p>Bash Cmd is designed to simplify the execution of terminal commands.</p>
+        <b>Bash Cmd has two models:</b>
+         <ul>
+            <li>bash cmd toolbar</li>
+            <li>bash cmd tool window</li>
+         </ul><br>
+         <a href="https://github.com/ljg-7f/BashCmd#readme">instruction for use</a><br>
+        </html>]]>
+    </description>
+    <change-notes><![CDATA[
+        <html>
+        <b>Changes in version 1.0.0</b>
+        <ul>
+          <li>Initial commit</li>
+        </ul><br>
+        </html>
+        ]]>
+    </change-notes>
+    <idea-version since-build="193.0"/>
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <toolWindow
+                id="BashCmd.ToolWindow"
+                anchor="right"
+                secondary="true"
+                factoryClass="BashCmdToolWindowFactory"/>
+    </extensions>
+
+    <actions>
+        <action
+                id="BashCmd.Refresh"
+                text="Refresh List"
+                class="actions.BashCmdToolWindowRefreshAction"
+                icon="AllIcons.Actions.Refresh"/>
+
+        <action
+                id="BashCmd.ExpandAll"
+                text="Expand All"
+                class="actions.BashCmdToolWindowExpandAction"
+                icon="AllIcons.Actions.Expandall"/>
+
+        <action
+                id="BashCmd.CollapseAll"
+                text="Collapse All"
+                class="actions.BashCmdToolWindowExpandAction"
+                icon="AllIcons.Actions.Collapseall"/>
+
+        <group id="BashCmd.ToolbarActions" popup="true" class="BashCmdToolbarActionGroup"
+               icon="AllIcons.Nodes.EmptyNode">
+            <add-to-group group-id="ToolbarRunGroup" anchor="before" relative-to-action="RunnerActions"/>
+        </group>
+
+        <group id="BashCmd.ToolWindowTopActions">
+            <reference id="BashCmd.Refresh"/>
+            <separator/>
+            <reference id="BashCmd.ExpandAll"/>
+            <reference id="BashCmd.CollapseAll"/>
+        </group>
+    </actions>
+</idea-plugin>

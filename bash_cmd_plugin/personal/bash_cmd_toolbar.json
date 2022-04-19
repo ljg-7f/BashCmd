@@ -1,0 +1,35 @@
+{
+    "commands":
+    [
+        {
+            "isSeparator": true
+        },
+        {
+            "name": "install apk(personal)",
+            "children":
+            [
+                {
+                    "name": "product_A",
+                    "desc": "install product_A",
+                    "cmd": "echo \"正在安装 product_A \nwaiting...\" && sleep 5"
+                },
+                {
+                    "isSeparator": true
+                },
+                {
+                    "name": "product_B",
+                    "desc": "install product_B",
+                    "cmd": "echo \"正在安装 product_B \nwaiting...\" && sleep 5"
+                },
+                {
+                    "isSeparator": true
+                },
+                {
+                    "name": "product_C",
+                    "desc": "install product_C",
+                    "cmd": "echo \"正在安装 product_B \nwaiting...\" && sleep 5"
+                }
+            ]
+        }
+    ]
+}

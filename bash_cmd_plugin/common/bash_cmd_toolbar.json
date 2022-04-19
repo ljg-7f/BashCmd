@@ -1,0 +1,47 @@
+{
+    "name": "Bash Cmd",
+    "icon": "/META-INF/icons/bash_cmd.svg",
+    "commands":
+    [
+        {
+            "name": "adb version",
+            "cmd": "adb --version",
+            "shortcut": "ctrl meta alt A"
+        },
+        {
+            "name": "run local bash",
+            "cmd": "sh #projectPath#/bash_cmd_plugin/shell/run_local_bash.sh",
+            "icon": "#projectPath#/bash_cmd_plugin/icons/run_1.svg"
+        },
+        {
+            "isSeparator": true
+        },
+        {
+            "name": "update resource",
+            "children":
+            [
+                {
+                    "name": "color",
+                    "desc": "update color",
+                    "cmd": "echo updating && echo waiting... && sleep 5"
+                },
+                {
+                    "isSeparator": true
+                },
+                {
+                    "name": "icon",
+                    "desc": "update icon",
+                    "cmd": "echo updating && echo waiting... && sleep 5"
+                },
+                {
+                    "isSeparator": true
+                },
+                {
+                    "name": "font",
+                    "desc": "update font",
+                    "cmd": "echo updating && echo waiting... && sleep 5"
+                }
+            ]
+        }
+    ]
+}
