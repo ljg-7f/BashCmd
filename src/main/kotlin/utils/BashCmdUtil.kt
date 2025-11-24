@@ -3,13 +3,11 @@ package utils
 import BashCmdIconType
 import bean.BashCmdRootBean
 import com.intellij.notification.NotificationDisplayType
-import com.intellij.notification.NotificationGroup
+import com.intellij.notification.NotificationGroupManager
 import com.intellij.notification.NotificationType
 import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.util.IconLoader
-import com.intellij.util.ImageLoader
-import com.intellij.util.ui.JBImageIcon
 import java.io.File
 import javax.swing.Icon
 
@@ -19,8 +17,8 @@ object BashCmdUtil {
     private const val BASH_CAM_ICON_MAIN = "/META-INF/icons/bash_cmd.svg"
     private const val BASH_CAM_ICON_RUN = "/META-INF/icons/run.svg"
     private const val BASH_CAM_ICON_MORE = "/META-INF/icons/more.svg"
-    private val ONLY_LOG = NotificationGroup.logOnlyGroup("Bash Cmd Log")
-    private val NOTIFY_BALLOON = NotificationGroup.balloonGroup("Bash Cmd Tip")
+    private val ONLY_LOG = NotificationGroupManager.getInstance().getNotificationGroup("Bash Cmd Log")
+    private val NOTIFY_BALLOON = NotificationGroupManager.getInstance().getNotificationGroup("Bash Cmd Tip")
 
     fun getBashCmdIcon(
         iconPath: String?,
@@ -42,14 +40,14 @@ object BashCmdUtil {
                     }
                 } else if (isSvg(it)) {
                     File(it).takeIf { file -> file.exists() }?.let { file ->
-                        ImageLoader.loadCustomIcon(file)?.run {
-                            return JBImageIcon(this)
+                        IconLoader.findIcon(file.toURI().toURL())?.let {
+                            return it
                         }
                     }
                 }
             }
         } catch (e: Exception) {
-            log("get icon of [$iconPath] is error: $e, \nwill use default icon.")
+            log("get icon of [$iconPath] is error: $e, \nwill use default icon.", null)
         }
 
         // 使用默认icon
@@ -77,12 +75,12 @@ object BashCmdUtil {
      * type 为 BALLOON 时, 会有弹窗提示, 同时也会输出到 Event Log 和 idea.log 中.
      */
 
-    fun log(content: String, type: NotificationDisplayType? = NotificationDisplayType.NONE) {
+    fun log(content: String, type: NotificationDisplayType? = NotificationDisplayType.NONE, project: Project? = null) {
         when (type) {
             null -> null
             NotificationDisplayType.NONE -> ONLY_LOG
             else -> NOTIFY_BALLOON
-        }?.createNotification(BASH_CAM_NAME, null, content, NotificationType.INFORMATION)?.notify(null)
+        }?.createNotification(BASH_CAM_NAME, content, NotificationType.INFORMATION)?.notify(project)
 
         Logger.getInstance(BASH_CAM_NAME).warn(content)
     }

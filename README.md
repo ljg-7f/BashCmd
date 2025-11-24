@@ -27,6 +27,10 @@ Bash Cmd description map:
 
 <img src="img/bash_cmd_info.png"/>
 
+Bash Cmd in intellij ide new ui style:
+
+<img src="img/bash_cmd_info_new_ui.png"/>
+
 ### 3.1 Configuration file directory structure
 
 Create a `bash_cmd_plugin` directory in the root directory of the project.

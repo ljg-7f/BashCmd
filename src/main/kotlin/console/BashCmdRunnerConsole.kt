@@ -51,7 +51,7 @@ class BashCmdConsoleRunner(
                 addProcessListener(object : ProcessAdapter() {
                     override fun processTerminated(event: ProcessEvent) {
                         if (event.exitCode == 0) {
-                            BashCmdUtil.log(it, NotificationDisplayType.BALLOON)
+                            BashCmdUtil.log(it, NotificationDisplayType.BALLOON, project)
                         }
                     }
                 })
@@ -100,7 +100,7 @@ class BashCmdConsoleRunner(
                     ).initAndRun()
                 }
             } catch (e: Exception) {
-                BashCmdUtil.log(" execute bash command [$commands] is error: $e")
+                BashCmdUtil.log("execute bash command [$commands] is error: $e", null)
             }
         }
 

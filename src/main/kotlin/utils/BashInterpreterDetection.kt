@@ -2,7 +2,6 @@ package utils
 
 import com.intellij.openapi.util.SystemInfo
 import com.intellij.openapi.util.SystemInfoRt
-import org.apache.commons.lang.StringUtils
 import java.io.File
 
 object BashInterpreterDetection {
@@ -44,8 +43,8 @@ object BashInterpreterDetection {
 
 private object OSUtil {
     fun findBestExecutable(commandName: String): String? {
-        val pathElements = StringUtils.split(System.getenv("PATH"), File.pathSeparatorChar) ?: return null
-        return findBestExecutable(commandName, listOf(*pathElements))
+        val pathElements = System.getenv("PATH")?.split(File.pathSeparatorChar) ?: return null
+        return findBestExecutable(commandName, pathElements)
     }
 
     private fun findBestExecutable(commandName: String, paths: List<String>): String? {

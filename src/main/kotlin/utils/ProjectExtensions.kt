@@ -14,9 +14,6 @@ fun Project.getBashCmdToolWindow(): BashCmdToolWindow? {
         ?.components
         ?.get(0)
         ?.let {
-            if (it is BashCmdToolWindow)
-                it
-            else
-                null
+            it as? BashCmdToolWindow
         }
 }

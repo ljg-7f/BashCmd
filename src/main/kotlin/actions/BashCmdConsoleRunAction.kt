@@ -1,5 +1,6 @@
 package actions
 
+import com.intellij.openapi.actionSystem.ActionUpdateThread
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.project.DumbAwareAction
 import com.intellij.openapi.project.Project
@@ -13,6 +14,10 @@ class BashCmdConsoleRunAction(
     private val command: String,
     private val finishTip: String?
 ) : DumbAwareAction("Run: $name", "Run: $name", BashCmdUtil.getBashCmdIcon("AllIcons.Actions.Execute")) {
+
+    override fun getActionUpdateThread(): ActionUpdateThread {
+        return ActionUpdateThread.EDT
+    }
 
     override fun update(e: AnActionEvent) {
         process?.let { e.presentation.isEnabled = !it.isAlive }

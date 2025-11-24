@@ -5,12 +5,14 @@
     [
         {
             "name": "adb version",
-            "cmd": "adb --version"
+            "cmd": "adb --version",
+            "finishTip": "adb version complete"
         },
         {
             "name": "run local bash",
             "cmd": "sh #projectPath#/bash_cmd_plugin/shell/run_local_bash.sh",
-            "icon": "#projectPath#/bash_cmd_plugin/icons/run_1.svg"
+            "icon": "#projectPath#/bash_cmd_plugin/icons/run_1.svg",
+            "finishTip": "run local bash complete"
         },
         {
             "name": "update resource style_1",

@@ -19,6 +19,7 @@ import java.awt.event.ComponentAdapter
 import java.awt.event.ComponentEvent
 import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
+import java.util.Locale.getDefault
 import javax.swing.JTree
 import javax.swing.tree.DefaultMutableTreeNode
 import javax.swing.tree.DefaultTreeCellRenderer
@@ -40,7 +41,7 @@ class BashCmdToolWindow(private val project: Project) : BorderLayoutPanel(), Dum
         val actionManager = ActionManager.getInstance()
         val actionGroup = actionManager.getAction("BashCmd.ToolWindowTopActions") as DefaultActionGroup
         val toolbar = actionManager.createActionToolbar(ActionPlaces.TOOLWINDOW_TITLE, actionGroup, true)
-        toolbar.setTargetComponent(this)
+        toolbar.targetComponent = this
         addToTop(toolbar.component)
 
         // 添加指令集面板
@@ -61,7 +62,9 @@ class BashCmdToolWindow(private val project: Project) : BorderLayoutPanel(), Dum
 
     private fun getCommandTree(): Tree {
         val data = BashCmdDataManager.loadToolWindowData(project)
-        val rootNode = DefaultMutableTreeNode(BashCmdUtil.getBashCmdName(data?.name).toLowerCase().replace(" ", "-"))
+        val rootNode = DefaultMutableTreeNode(
+            BashCmdUtil.getBashCmdName(data?.name).lowercase(getDefault()).replace(" ", "-")
+        )
         addChildren(rootNode, data)
         return Tree(rootNode).apply {
             cellRenderer = BashCmdTreeCellRenderer()

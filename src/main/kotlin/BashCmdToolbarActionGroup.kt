@@ -15,6 +15,10 @@ class BashCmdToolbarActionGroup : ActionGroup(), DumbAware {
 
     private var actionMap: HashMap<Project, Array<AnAction>?> = HashMap()
 
+    override fun getActionUpdateThread(): ActionUpdateThread {
+        return ActionUpdateThread.EDT
+    }
+
     override fun update(e: AnActionEvent) {
         e.project?.let {
             val data = BashCmdDataManager.loadToolbarData(it)
@@ -31,7 +35,7 @@ class BashCmdToolbarActionGroup : ActionGroup(), DumbAware {
     override fun getChildren(e: AnActionEvent?): Array<AnAction> {
         return e?.project?.let {
             actionMap[it] ?: getActionList(it).apply { actionMap[it] = this }
-        } ?: AnAction.EMPTY_ARRAY
+        } ?: EMPTY_ARRAY
     }
 
     private fun refresh(project: Project) {
@@ -69,11 +73,13 @@ class BashCmdToolbarActionGroup : ActionGroup(), DumbAware {
                 item,
                 isTopLevel
             )
+
             BashCmdUtil.isNotEmpty(item.children) && BashCmdUtil.isNotEmpty(item.name) -> BashCmdActionGroup(
                 project,
                 item,
                 isTopLevel
             )
+
             else -> null
         }
     }
@@ -90,6 +96,10 @@ class BashCmdToolbarActionGroup : ActionGroup(), DumbAware {
             item.shortcut?.let {
                 registerCustomShortcutSet(this, WindowManager.getInstance().getIdeFrame(project)?.component)
             }
+        }
+
+        override fun getActionUpdateThread(): ActionUpdateThread {
+            return ActionUpdateThread.EDT
         }
 
         override fun actionPerformed(e: AnActionEvent) {
@@ -136,6 +146,10 @@ class BashCmdToolbarActionGroup : ActionGroup(), DumbAware {
             name,
             BashCmdUtil.getBashCmdIcon("/META-INF/icons/refresh.svg", BashCmdIconType.RUN)
         ) {
+        override fun getActionUpdateThread(): ActionUpdateThread {
+            return ActionUpdateThread.EDT
+        }
+
         override fun actionPerformed(e: AnActionEvent) {
             refresh(project)
         }

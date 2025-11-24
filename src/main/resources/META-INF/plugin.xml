@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>com.bash.cmd</id>
     <name>Bash Cmd</name>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <vendor email="liu_jing_guang@163.com">7f</vendor>
     <description>
         <![CDATA[<html>
@@ -16,6 +16,10 @@
     </description>
     <change-notes><![CDATA[
         <html>
+        <b>Changes in version 1.0.1</b>
+        <ul>
+          <li>adapt intellij ide new ui version</li>
+        </ul><br>
         <b>Changes in version 1.0.0</b>
         <ul>
           <li>Initial commit</li>
@@ -23,7 +27,7 @@
         </html>
         ]]>
     </change-notes>
-    <idea-version since-build="193.0"/>
+    <idea-version since-build="241.7"/>
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
@@ -32,6 +36,12 @@
                 anchor="right"
                 secondary="true"
                 factoryClass="BashCmdToolWindowFactory"/>
+        <notificationGroup id="Bash Cmd Log"
+                           displayType="NONE"
+                           isLogByDefault="true"/>
+        <notificationGroup id="Bash Cmd Tip"
+                           displayType="BALLOON"
+                           isLogByDefault="false"/>
     </extensions>
 
     <actions>
@@ -55,6 +65,7 @@
 
         <group id="BashCmd.ToolbarActions" popup="true" class="BashCmdToolbarActionGroup"
                icon="AllIcons.Nodes.EmptyNode">
+            <add-to-group group-id="MainToolbarRight" anchor="first"/>
             <add-to-group group-id="ToolbarRunGroup" anchor="before" relative-to-action="RunnerActions"/>
         </group>
 

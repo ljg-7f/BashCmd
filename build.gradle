@@ -1,11 +1,10 @@
 plugins {
-    id 'org.jetbrains.kotlin.jvm' version '1.5.10'
-    id 'org.jetbrains.intellij' version '1.3.1'
+    id 'org.jetbrains.kotlin.jvm' version '1.9.22'
+    id 'org.jetbrains.intellij' version '1.17.3'
     id 'java'
 }
 
 repositories {
-    mavenCentral()
     mavenCentral()
 }
 
@@ -21,7 +20,7 @@ test {
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
-    version = '2019.3'
+    version = '2024.1.7'
     updateSinceUntilBuild = false
 }
 
@@ -31,7 +30,14 @@ runIde {
     ideDir = file('/Applications/Android Studio.app/Contents')
 }
 
+kotlin {
+    jvmToolchain(17)
+}
+
 java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    }
     sourceSets {
         main {
             kotlin.srcDir("src")

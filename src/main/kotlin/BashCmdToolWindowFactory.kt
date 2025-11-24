@@ -8,18 +8,16 @@ import javax.swing.Icon
 
 class BashCmdToolWindowFactory : ToolWindowFactory, DumbAware {
 
-    private var icon: Icon? = null
-    private var name: String? = null
+    private var bashIcon: Icon? = null
+    private var bashName: String? = null
 
     override fun init(toolWindow: ToolWindow) {
-        if (icon != null && name != null) {
-            toolWindow.setIcon(icon!!)
-            toolWindow.stripeTitle = name!!
-        }
+        bashIcon?.let { toolWindow.setIcon(it) }
+        bashName?.let { toolWindow.stripeTitle = it }
     }
 
     override fun createToolWindowContent(project: Project, toolWindow: ToolWindow) {
-        ContentFactory.SERVICE.getInstance()?.let {
+        ContentFactory.getInstance()?.let {
             it.createContent(BashCmdToolWindow(project), null, false).run {
                 toolWindow.contentManager.addContent(this)
             }
@@ -28,8 +26,8 @@ class BashCmdToolWindowFactory : ToolWindowFactory, DumbAware {
 
     override fun shouldBeAvailable(project: Project): Boolean {
         val data = BashCmdDataManager.loadToolWindowData(project)
-        name = BashCmdUtil.getBashCmdName(data?.name)
-        icon = BashCmdUtil.getBashCmdIcon(data?.icon, BashCmdIconType.MAIN, project)
+        bashName = BashCmdUtil.getBashCmdName(data?.name)
+        bashIcon = BashCmdUtil.getBashCmdIcon(data?.icon, BashCmdIconType.MAIN, project)
         return BashCmdUtil.isNotEmpty(data?.commands)
     }
 }

@@ -23,6 +23,10 @@ Bash Cmd 说明图：
 
 <img src="img/bash_cmd_info.png"/>
 
+Bash Cmd 在 intellij ide 新界面样式：
+
+<img src="img/bash_cmd_info_new_ui.png"/>
+
 ### 3.1 配置文件目录结构
 
 在项目的根目录中创建`bash_cmd_plugin`目录。

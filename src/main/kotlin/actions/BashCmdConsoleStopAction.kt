@@ -1,6 +1,7 @@
 package actions
 
 import com.intellij.execution.process.ProcessHandler
+import com.intellij.openapi.actionSystem.ActionUpdateThread
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.project.DumbAwareAction
 import utils.BashCmdUtil
@@ -10,6 +11,10 @@ class BashCmdConsoleStopAction(
     private val handle: ProcessHandler,
     name: String
 ) : DumbAwareAction("Stop: $name", "Stop: $name", BashCmdUtil.getBashCmdIcon("AllIcons.Actions.Suspend")) {
+
+    override fun getActionUpdateThread(): ActionUpdateThread {
+        return ActionUpdateThread.EDT
+    }
 
     override fun update(e: AnActionEvent) {
         process?.let { e.presentation.isEnabled = it.isAlive }

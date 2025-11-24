@@ -6,12 +6,14 @@
         {
             "name": "adb version",
             "cmd": "adb --version",
-            "shortcut": "ctrl meta alt A"
+            "shortcut": "ctrl meta alt A",
+            "finishTip": "adb version complete"
         },
         {
             "name": "run local bash",
             "cmd": "sh #projectPath#/bash_cmd_plugin/shell/run_local_bash.sh",
-            "icon": "#projectPath#/bash_cmd_plugin/icons/run_1.svg"
+            "icon": "#projectPath#/bash_cmd_plugin/icons/run_1.svg",
+            "finishTip": "run local bash complete"
         },
         {
             "isSeparator": true

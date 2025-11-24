@@ -3,6 +3,7 @@ import com.google.gson.Gson
 import com.google.gson.stream.JsonReader
 import com.intellij.openapi.project.Project
 import utils.BashCmdUtil
+import java.io.File
 import java.io.File.separator
 import java.io.FileReader
 
@@ -28,12 +29,15 @@ object BashCmdDataManager {
     }
 
     private fun getDataFromJson(path: String): BashCmdRootBean? {
-        return try {
-            Gson().fromJson<BashCmdRootBean>(JsonReader(FileReader(path)), BashCmdRootBean::class.java)
-        } catch (e: Exception) {
-            BashCmdUtil.log("get data from [$path] is error: $e", null)
-            null
+        if (File(path).exists()) {
+            return try {
+                Gson().fromJson<BashCmdRootBean>(JsonReader(FileReader(path)), BashCmdRootBean::class.java)
+            } catch (e: Exception) {
+                BashCmdUtil.log("get data from [$path] is error: $e", null)
+                null
+            }
         }
+        return null
     }
 
     // 将 common 和 personal 目录中得到的数据对象进行 merge
@@ -47,18 +51,19 @@ object BashCmdDataManager {
                 icon = personal.icon ?: common!!.icon
                 commands = common!!.commands!!.also { it.addAll(personal.commands!!) }
             }
+
             else -> null
         }
     }
 
     fun reLoadToolWindowData(project: Project): BashCmdRootBean? {
-        BashCmdUtil.log("refresh tool window")
+        BashCmdUtil.log("refresh tool window", project = project)
         toolWindowDataMap[project] = null
         return loadToolWindowData(project)
     }
 
     fun reLoadToolbarData(project: Project): BashCmdRootBean? {
-        BashCmdUtil.log("refresh toolbar")
+        BashCmdUtil.log("refresh toolbar", project = project)
         toolBarDataMap[project] = null
         return loadToolbarData(project)
     }
